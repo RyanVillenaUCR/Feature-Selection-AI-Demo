@@ -1,0 +1,4 @@
+The small dataset has 100 instances, and 10 features; while the large dataset has 1000 instances, and 40 features.
+
+On the small dataset, accuracy can be 0.89  when using only features 5 7 3; while on the large dataset, accuracy can be 0.949 when using only features 27 15 1.
+
