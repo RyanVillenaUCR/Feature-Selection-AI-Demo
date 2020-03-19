@@ -10,6 +10,7 @@ import java.util.Set;
 
 public class Tester {
 	
+	// To enable, make DataGetter.mapToRange
 	private static void testMapToRange() {
 		
 		BigDecimal x = new BigDecimal(4.75);
@@ -21,7 +22,7 @@ public class Tester {
 		System.out.println("Mapping " + x + " from [ " + oldLo + ", " + oldHi + " ]");
 		System.out.println("to [ " + newLo + ", " + newHi + " ]: ");
 		
-		x = DataGetter.mapRange(oldLo, oldHi, newLo, newHi, x);
+		x = DataGetter.mapToRange(oldLo, oldHi, newLo, newHi, x);
 		
 		System.out.println("Now, x = " + x);
 	}

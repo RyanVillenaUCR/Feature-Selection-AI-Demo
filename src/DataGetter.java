@@ -106,7 +106,7 @@ public class DataGetter {
 		return minMax;
 	}
 
-	public static BigDecimal mapRange(BigDecimal oldLo, BigDecimal oldHi,
+	public static BigDecimal mapToRange(BigDecimal oldLo, BigDecimal oldHi,
 			BigDecimal newLo, BigDecimal newHi,
 			BigDecimal x) {
 		
@@ -124,4 +124,6 @@ public class DataGetter {
 		
 		return x;
 	}
+
+
 }
