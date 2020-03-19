@@ -19,10 +19,9 @@ public class Tester {
 		DataGetter.normalize(data);
 		
 		System.out.println("Normalized data:");
-		System.out.println(data);
+		System.out.println(Util.dataToString(data));
 	}
 	
-	// To enable, make DataGetter.mapToRange public
 	private static void testMapToRange() {
 		
 		BigDecimal x = new BigDecimal(4.75);
@@ -34,7 +33,7 @@ public class Tester {
 		System.out.println("Mapping " + x + " from [ " + oldLo + ", " + oldHi + " ]");
 		System.out.println("to [ " + newLo + ", " + newHi + " ]: ");
 		
-		x = DataGetter.mapToRange(oldLo, oldHi, newLo, newHi, x);
+		x = Util.mapToRange(oldLo, oldHi, newLo, newHi, x);
 		
 		System.out.println("Now, x = " + x);
 	}
@@ -57,17 +56,7 @@ public class Tester {
 		
 		Map<Integer, Set<List<BigDecimal>>> data = DataGetter.parseData(filepath);
 		System.out.println("Got input from file " + filepath + ":");
-		
-		for (Entry<Integer, Set<List<BigDecimal>>> thisEntry : data.entrySet()) {
-			
-			Integer key = thisEntry.getKey();
-			System.out.println(key + ":");
-			
-			Set<List<BigDecimal>> instances = data.get(key);
-			
-			for (List<BigDecimal> thisInstance : instances)
-				System.out.println(thisInstance);
-		}
+		System.out.println(Util.dataToString(data));
 	}
 
 	private static void testIEEEFileInputToLists() {

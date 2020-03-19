@@ -107,25 +107,6 @@ public class DataGetter {
 		return minMax;
 	}
 
-	public static BigDecimal mapToRange(BigDecimal oldLo, BigDecimal oldHi,
-			BigDecimal newLo, BigDecimal newHi,
-			BigDecimal x) {
-		
-		// x -= oldLo; bring lo down to 0
-		x = x.subtract(oldLo);
-		
-		// x /= (oldHi - oldLo); map to range [0, 1]
-		x = x.divide(oldHi.subtract(oldLo), RoundingMode.HALF_UP);
-		
-		// x *= (newHi - newLo); map to range [0, newHi]
-		x = x.multiply(newHi.subtract(newLo));
-		
-		// x += newLo; bring lo up to newLo
-		x = x.add(newLo);
-		
-		return x;
-	}
-
 	public static void normalize(Map<Integer, Set<List<BigDecimal>>> data) {
 		
 		BigDecimal[] minMax = getMinMax(data);
@@ -143,7 +124,7 @@ public class DataGetter {
 				
 				for (int i = 0; i < thisList.size(); i++) {
 					
-					BigDecimal normalized = mapToRange(
+					BigDecimal normalized = Util.mapToRange(
 						oldLo, oldHi, newLo, newHi, thisList.get(i));
 					
 					thisList.set(i, normalized);
