@@ -33,12 +33,14 @@ public class Util {
 		for (Entry<Integer, Set<List<BigDecimal>>> thisEntry : data.entrySet()) {
 			
 			Integer key = thisEntry.getKey();
-			sb.append(key + ":\n");
+			sb.append("Training data for class " + key + ":\n");
 			
 			Set<List<BigDecimal>> instances = data.get(key);
 			
 			for (List<BigDecimal> thisInstance : instances)
 				sb.append(thisInstance.toString() + "\n");
+			
+			sb.append('\n');
 		}
 		
 		return sb.toString();
