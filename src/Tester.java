@@ -10,6 +10,33 @@ import java.util.Set;
 
 public class Tester {
 	
+	private static void testMapToRange() {
+		
+		BigDecimal x = new BigDecimal(4.75);
+		BigDecimal oldLo = new BigDecimal(4);
+		BigDecimal oldHi = new BigDecimal(8);
+		BigDecimal newLo = new BigDecimal(-1);
+		BigDecimal newHi = new BigDecimal(-9);
+		
+		System.out.println("Mapping " + x + " from [ " + oldLo + ", " + oldHi + " ]");
+		System.out.println("to [ " + newLo + ", " + newHi + " ]: ");
+		
+		x = DataGetter.mapRange(oldLo, oldHi, newLo, newHi, x);
+		
+		System.out.println("Now, x = " + x);
+	}
+	
+	private static void testFindMinMax() {
+		
+		String filepath = "sample_data/cs_170_small80.txt";
+		
+		Map<Integer, Set<List<BigDecimal>>> data = DataGetter.parseData(filepath);
+		BigDecimal[] minMax = DataGetter.getMinMax(data);
+		
+		System.out.println("Minumum of data: " + minMax[0]);
+		System.out.println("Maximum of data: " + minMax[1]);
+	}
+	
 	private static void testIEEEFileInputToMap() {
 		
 		String filepath = "sample_data/cs_170_small80.txt";
@@ -70,6 +97,10 @@ public class Tester {
 		
 //		testIEEEFileInputToLists();
 		
-		testIEEEFileInputToMap();
+//		testIEEEFileInputToMap();
+		
+//		testFindMinMax();
+		
+		testMapToRange();
 	}
 }

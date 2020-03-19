@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -66,8 +67,61 @@ public class DataGetter {
 		return data;
 	}
 	
-	public static BigDecimal[] getMaxMin(Map<Integer, Set<List<BigDecimal>>> data) {
+	/**
+	 * Finds the maximum and minimum value of the dataset.
+	 * @param data Dataset
+	 * @return Array of values where arr[0] is the minumum and arr[1] is the maximum
+	 */
+	public static BigDecimal[] getMinMax(Map<Integer, Set<List<BigDecimal>>> data) {
 		
-		return null;
+		BigDecimal[] minMax = new BigDecimal[2];
+		minMax[0] = minMax[1] = null;
+		
+		for (Entry<Integer, Set<List<BigDecimal>>> dataEntry : data.entrySet()) {
+			
+			Set<List<BigDecimal>> rows = dataEntry.getValue();
+			for (List<BigDecimal> thisRow : rows) {
+				
+				for (BigDecimal thisDataPoint : thisRow) {
+					
+					// If empty, populate with the first data point
+					if (minMax[0] == null) {
+						minMax[0] = minMax[1] = thisDataPoint;
+						continue;
+					}
+					
+					// Check for a new minimum
+					if (thisDataPoint.compareTo(minMax[0]) < 0)
+						minMax[0] = thisDataPoint;
+					
+					// Check for a new maximum
+					if (thisDataPoint.compareTo(minMax[1]) > 0)
+						minMax[1] = thisDataPoint;
+				}
+			}
+			
+			
+		}
+		
+		return minMax;
+	}
+
+	public static BigDecimal mapRange(BigDecimal oldLo, BigDecimal oldHi,
+			BigDecimal newLo, BigDecimal newHi,
+			BigDecimal x) {
+		
+		// x -= oldLo; bring lo down to 0
+		x = x.subtract(oldLo);
+		
+		// x /= (oldHi - oldLo); map to range [0, 1]
+		x = x.divide(oldHi.subtract(oldLo));
+		
+		// x *= (newHi - newLo); map to range [0, newHi]
+		x = x.multiply(newHi.subtract(newLo));
+		
+		// x += newLo; bring lo up to newLo
+		x = x.add(newLo);
+		
+		return x;
 	}
 }
