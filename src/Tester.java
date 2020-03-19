@@ -3,11 +3,34 @@ import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Tester {
+	
+	private static void testIEEEFileInputToMap() {
+		
+		String filepath = "sample_data/cs_170_small80.txt";
+//		String filepath = "sample_data/cs_170_large80.txt";
+		
+		Map<Integer, Set<List<BigDecimal>>> data = DataGetter.parseData(filepath);
+		System.out.println("Got input from file " + filepath + ":");
+		
+		for (Entry<Integer, Set<List<BigDecimal>>> thisEntry : data.entrySet()) {
+			
+			Integer key = thisEntry.getKey();
+			System.out.println(key + ":");
+			
+			Set<List<BigDecimal>> instances = data.get(key);
+			
+			for (List<BigDecimal> thisInstance : instances)
+				System.out.println(thisInstance);
+		}
+	}
 
-	private static void testIEEEFileInput() {
+	private static void testIEEEFileInputToLists() {
 		
 		String filepath = "sample_data/cs_170_small80.txt";
 		File dataFile = new File(filepath);
@@ -42,8 +65,11 @@ public class Tester {
 			System.out.println(thisRow);
 	}
 	
+	
 	public static void runTests() {
 		
-		testIEEEFileInput();
+//		testIEEEFileInputToLists();
+		
+		testIEEEFileInputToMap();
 	}
 }
