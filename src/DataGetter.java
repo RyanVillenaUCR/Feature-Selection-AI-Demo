@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -114,7 +115,7 @@ public class DataGetter {
 		x = x.subtract(oldLo);
 		
 		// x /= (oldHi - oldLo); map to range [0, 1]
-		x = x.divide(oldHi.subtract(oldLo));
+		x = x.divide(oldHi.subtract(oldLo), RoundingMode.HALF_UP);
 		
 		// x *= (newHi - newLo); map to range [0, newHi]
 		x = x.multiply(newHi.subtract(newLo));
@@ -125,5 +126,29 @@ public class DataGetter {
 		return x;
 	}
 
-
+	public static void normalize(Map<Integer, Set<List<BigDecimal>>> data) {
+		
+		BigDecimal[] minMax = getMinMax(data);
+		
+		BigDecimal oldLo = minMax[0];
+		BigDecimal oldHi = minMax[1];
+		BigDecimal newLo = BigDecimal.ZERO;
+		BigDecimal newHi = BigDecimal.ONE;
+		
+		for (Entry<Integer, Set<List<BigDecimal>>> entry : data.entrySet()) {
+			
+			Set<List<BigDecimal>> thisSet = entry.getValue();
+			
+			for (List<BigDecimal> thisList : thisSet) {
+				
+				for (int i = 0; i < thisList.size(); i++) {
+					
+					BigDecimal normalized = mapToRange(
+						oldLo, oldHi, newLo, newHi, thisList.get(i));
+					
+					thisList.set(i, normalized);
+				}
+			}
+		}
+	}
 }

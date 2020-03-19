@@ -10,7 +10,19 @@ import java.util.Set;
 
 public class Tester {
 	
-	// To enable, make DataGetter.mapToRange
+	private static void testNormalize() {
+		
+		String filepath = "sample_data/cs_170_small80.txt";
+		
+		Map<Integer, Set<List<BigDecimal>>> data = DataGetter.parseData(filepath);
+		
+		DataGetter.normalize(data);
+		
+		System.out.println("Normalized data:");
+		System.out.println(data);
+	}
+	
+	// To enable, make DataGetter.mapToRange public
 	private static void testMapToRange() {
 		
 		BigDecimal x = new BigDecimal(4.75);
@@ -102,6 +114,8 @@ public class Tester {
 		
 //		testFindMinMax();
 		
-		testMapToRange();
+//		testMapToRange();
+		
+		testNormalize();
 	}
 }
