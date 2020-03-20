@@ -149,8 +149,44 @@ public class FeatureSelector {
 	
 	private static void runBackwardElimination(List<List<BigDecimal>> data) {
 		
-		// @TODO
-		runForwardSelection(data);
+		Set<Integer> all_features = new HashSet<Integer>();
+		for (int i = 1; i < DataGetter.getNumberOfFeatures(data); i++)
+			all_features.add(i);
+		
+		Node root = new Node(all_features, data);
+		Queue<Node> bestOfDepth = new PriorityQueue<Node>();
+		bestOfDepth.add(root);
+		
+		int depth = 0;
+		Node bestOfCurrentDepth = root;
+		
+		// Go while depth hasn't yet reached the end
+		while (depth <= DataGetter.getNumberOfFeatures(data)) {
+			
+			Set<Node> litter = bestOfCurrentDepth.generateBackwardChildren();
+			if (litter == null || litter.isEmpty()) break;
+//			assert(litter != null && !litter.isEmpty());
+			
+			Queue<Node> currentGeneration_pq = new PriorityQueue<Node>();
+			currentGeneration_pq.addAll(litter);
+			
+			for (Node litter_element : litter)
+				System.out.println(litter_element.generateStatus());
+			
+			bestOfCurrentDepth = currentGeneration_pq.peek();			
+			bestOfDepth.add(bestOfCurrentDepth);
+			
+			System.out.println("Feature set " + bestOfCurrentDepth + " was best of this generation,");
+			System.out.println("accuracy was " + bestOfCurrentDepth.evaluate());
+			
+			depth++;
+		}
+		
+		Node goat = bestOfDepth.peek();
+		
+		System.out.println("Finished search!");
+		System.out.println("The best feature subset is " + goat + ",");
+		System.out.println("with an accuracy of " + goat.evaluate().toString());
 	}
 	
 	public static void run() {

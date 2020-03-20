@@ -109,6 +109,28 @@ public class Node implements Comparable {
 		return children;
 	}
 	
+	public Set<Node> generateBackwardChildren() {
+		
+		if (features.isEmpty())
+			return new HashSet<Node>();
+		
+		int totalFeatures = DataGetter.getNumberOfFeatures(data);
+		
+		Set<Node> children = new HashSet<Node>();
+		for (int i = 1; i <= totalFeatures; i++) {
+			
+			Set<Integer> newFeatures = new HashSet<Integer>();
+			newFeatures.addAll(features);
+			
+			if (newFeatures.contains(i))
+				newFeatures.remove(i);
+			
+			children.add(new Node(newFeatures, data));
+		}
+		
+		return children;
+	}
+	
 	public String generateStatus() {
 		
 		StringBuilder sb = new StringBuilder();
