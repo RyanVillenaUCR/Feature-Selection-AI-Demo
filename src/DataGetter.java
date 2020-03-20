@@ -169,18 +169,7 @@ public class DataGetter {
 		}
 	}
 	
-	public static List<List<BigDecimal>> parseDataList(String filepath) {
-		
-		File datafile = new File(filepath);
-		Scanner fileScanner;
-		try {
-			fileScanner = new Scanner(datafile);
-		} catch (FileNotFoundException e) {
-			System.err.println("File " + filepath + " not found.");
-			System.err.println("pwd: " + System.getProperty("user.dir"));
-			e.printStackTrace();
-			return null;
-		}
+	public static List<List<BigDecimal>> parseDataList(Scanner fileScanner) {
 		
 		System.out.print("Fetching data... ");
 		
@@ -206,4 +195,14 @@ public class DataGetter {
 		
 		return data;
 	}
+
+	public static Integer getNumberOfFeatures(List<List<BigDecimal>> data) {
+		return data.get(0).size() - 1;
+	}
+
+	public static Integer getNumberOfInstances(List<List<BigDecimal>> data) {
+		return data.size();
+	}
+
+
 }
