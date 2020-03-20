@@ -204,5 +204,10 @@ public class DataGetter {
 		return data.size();
 	}
 
+	public static void printBeginStats(List<List<BigDecimal>> data) {
+		
+		System.out.println("The dataset has " + getNumberOfFeatures(data).toString() + " features,");
+		System.out.println("with " + getNumberOfInstances(data).toString() + " instances.");
+	}
 
 }
