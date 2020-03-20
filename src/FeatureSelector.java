@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -87,27 +89,47 @@ public class FeatureSelector {
 		
 		// If a custom filepath was given
 		String custom_filepath = cin.next();
+		File f = new File(custom_filepath);
+		
+		while (!f.exists()) {
+			
+			System.out.println("File " + custom_filepath + " not found. Please try again.");
+			custom_filepath = cin.next();
+			f = new File(custom_filepath);
+		}
+		
 		try {
 			return new Scanner(new File(custom_filepath));
-		} catch (FileNotFoundException e) {
-			System.out.println("File " + custom_filepath + " not found.");
+		} catch (FileNotFoundException e) {	// should be unreachable
+			System.err.println("Somehow, file " + custom_filepath + " wasn't found.");
 			e.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 	
 	public static void run() {
 		
 		cin = new Scanner(System.in);
 		
+		// Prompt the user for info
 		System.out.println("Welcome to Ryan Villena's Feature Selection Algorithm.");
 		Scanner file_sc = chooseFile();
 		SearchAlg alg = promptAlgorithm();
 		
+		// Print begin stats
+		List<List<BigDecimal>> data = DataGetter.parseDataList(file_sc);
+		DataGetter.printBeginStats(data);
+		System.out.print("Please wait while I normalize the data... ");
+		DataGetter.normalize(data);
+		System.out.println("Done!");
 		
-
+		// We no longer need user input for the rest of the program
 		cin.close();
 		file_sc.close();
+		
+		
+		
+		// Feature selection goes here
 	}
 	
 }
