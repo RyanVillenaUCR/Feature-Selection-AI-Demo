@@ -92,4 +92,22 @@ public class Util {
 		
 		return stdDev;
 	}
+
+	public static BigDecimal getDistance(List<BigDecimal> pointA, List<BigDecimal> pointB) {
+		
+		assert(pointA.size() == pointB.size());
+		
+		BigDecimal dist = BigDecimal.ZERO;
+		
+		for (int i = 0; i < pointA.size(); i++) {
+			
+			BigDecimal temp = pointA.get(i).subtract(pointB.get(i));
+			temp = temp.pow(2);
+			
+			dist = dist.add(temp);
+		}
+		
+		final int PRECISION = 7;
+		return dist.sqrt(new MathContext(PRECISION, RoundingMode.HALF_UP));
+	}
 }
