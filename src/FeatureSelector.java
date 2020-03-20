@@ -121,7 +121,7 @@ public class FeatureSelector {
 		// Go while depth hasn't yet reached the end
 		while (depth <= DataGetter.getNumberOfFeatures(data)) {
 			
-			Set<Node> litter = bestOfCurrentDepth.generateChildren();
+			Set<Node> litter = bestOfCurrentDepth.generateForwardChildren();
 			if (litter == null || litter.isEmpty()) break;
 //			assert(litter != null && !litter.isEmpty());
 			

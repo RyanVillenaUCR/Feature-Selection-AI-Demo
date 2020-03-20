@@ -79,7 +79,7 @@ public class Node implements Comparable {
 		}
 	}
 	
-	public Set<Node> generateChildren() {
+	public Set<Node> generateForwardChildren() {
 		
 		int totalFeatures = DataGetter.getNumberOfFeatures(data);
 		
