@@ -107,6 +107,10 @@ public class DataGetter {
 		return minMax;
 	}
 
+	/**
+	 * DEPRACATED: Wrong way to normalize.
+	 * @param data 
+	 */
 	public static void normalize(Map<Integer, Set<List<BigDecimal>>> data) {
 		
 		BigDecimal[] minMax = getMinMax(data);
@@ -131,5 +135,75 @@ public class DataGetter {
 				}
 			}
 		}
+	}
+
+	public static void normalize(List<List<BigDecimal>> data) {
+		
+		assert (data.size() >= 2) :
+			"Input must have a column for class name and at least one feature\n";
+		
+		// Iterate through columns, excluding the class name
+		for (int col = 1; col < data.get(0).size(); col++) {
+			
+			// First, get mean and stddev
+			// These require the current colummn to function
+			List<BigDecimal> column = new ArrayList<BigDecimal>();
+			for (int row = 0; row < data.size(); row++)
+				column.add(data.get(row).get(col));
+			
+			BigDecimal mean   = Util.getMean(column);
+			BigDecimal stdDev = Util.getStdDev(column);
+			
+			
+			
+			// Now, iterate through rows again,
+			// setting each element to its normalized value
+			for (int row = 0; row < data.size(); row++) {
+				
+				BigDecimal normalizedValue = data.get(row).get(col);
+				normalizedValue = normalizedValue.subtract(mean);
+				normalizedValue = normalizedValue.divide(stdDev, RoundingMode.HALF_UP);
+				
+				data.get(row).set(col, normalizedValue);
+			}
+		}
+	}
+	
+	public static List<List<BigDecimal>> parseDataList(String filepath) {
+		
+		File datafile = new File(filepath);
+		Scanner fileScanner;
+		try {
+			fileScanner = new Scanner(datafile);
+		} catch (FileNotFoundException e) {
+			System.err.println("File " + filepath + " not found.");
+			System.err.println("pwd: " + System.getProperty("user.dir"));
+			e.printStackTrace();
+			return null;
+		}
+		
+		System.out.print("Fetching data... ");
+		
+		List<List<BigDecimal>> data = new ArrayList<List<BigDecimal>>();
+		while (fileScanner.hasNextLine()) {
+			
+			// First, read this line
+			Scanner sc = new Scanner(fileScanner.nextLine());
+
+			List<BigDecimal> decimals = new ArrayList<BigDecimal>();
+			
+			while (sc.hasNextBigDecimal())
+				decimals.add(sc.nextBigDecimal());
+			sc.close();
+			
+			
+			
+			data.add(decimals);
+		}
+		fileScanner.close();
+		
+		System.out.println("done!");
+		
+		return data;
 	}
 }

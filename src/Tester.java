@@ -10,6 +10,16 @@ import java.util.Set;
 
 public class Tester {
 	
+	private static void testNormalizeLists() {
+		
+		String filepath = "sample_data/cs_170_small80.txt";
+		List<List<BigDecimal>> data = DataGetter.parseDataList(filepath);
+		
+		System.out.println("Before normalization:\n" + Util.dataToString(data));
+		DataGetter.normalize(data);
+		System.out.println("After normalization:\n" + Util.dataToString(data));
+	}
+	
 	private static void testNormalize() {
 		
 		String filepath = "sample_data/cs_170_small80.txt";
@@ -62,35 +72,10 @@ public class Tester {
 	private static void testIEEEFileInputToLists() {
 		
 		String filepath = "sample_data/cs_170_small80.txt";
-		File dataFile = new File(filepath);
-		Scanner sc;
-		try {
-			sc = new Scanner(dataFile);
-		} catch (FileNotFoundException e) {
-			System.err.println("File " + filepath + " not found.");
-			System.err.println("pwd: " + System.getProperty("user.dir"));
-			e.printStackTrace();
-			return;
-		}
-		
-		List< List<BigDecimal>> doubles = new ArrayList< List<BigDecimal>>();
-		
-		while (sc.hasNextLine()) {
-			
-			Scanner lineScanner = new Scanner(sc.nextLine());
-			List<BigDecimal> thisRow = new ArrayList<BigDecimal>();
-			
-			while (lineScanner.hasNextBigDecimal())
-				thisRow.add(lineScanner.nextBigDecimal());
-			
-			doubles.add(thisRow);
-			
-			lineScanner.close();
-		}
-		sc.close();	
+		List<List<BigDecimal>> data = DataGetter.parseDataList(filepath);
 		
 		System.out.println("Got input from file " + filepath + ":");
-		for (List<BigDecimal> thisRow : doubles)	
+		for (List<BigDecimal> thisRow : data)	
 			System.out.println(thisRow);
 	}
 	
@@ -105,6 +90,8 @@ public class Tester {
 		
 //		testMapToRange();
 		
-		testNormalize();
+//		testNormalize();
+		
+		testNormalizeLists();
 	}
 }
