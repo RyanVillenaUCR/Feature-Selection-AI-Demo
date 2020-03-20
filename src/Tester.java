@@ -13,7 +13,16 @@ public class Tester {
 	private static void testNormalizeLists() {
 		
 		String filepath = "sample_data/cs_170_small80.txt";
-		List<List<BigDecimal>> data = DataGetter.parseDataList(filepath);
+		Scanner file_sc;
+		try {
+			file_sc = new Scanner(new File(filepath));
+		} catch (FileNotFoundException e) {
+			System.err.println("File " + filepath + " not found.");
+			e.printStackTrace();
+			return;
+		}
+		List<List<BigDecimal>> data = DataGetter.parseDataList(file_sc);
+		file_sc.close();
 		
 		System.out.println("Before normalization:\n" + Util.dataToString(data));
 		DataGetter.normalize(data);
@@ -72,7 +81,16 @@ public class Tester {
 	private static void testIEEEFileInputToLists() {
 		
 		String filepath = "sample_data/cs_170_small80.txt";
-		List<List<BigDecimal>> data = DataGetter.parseDataList(filepath);
+		Scanner file_sc;
+		try {
+			file_sc = new Scanner(new File(filepath));
+		} catch (FileNotFoundException e) {
+			System.err.println("File " + filepath + " not found.");
+			e.printStackTrace();
+			return;
+		}
+		List<List<BigDecimal>> data = DataGetter.parseDataList(file_sc);
+		file_sc.close();
 		
 		System.out.println("Got input from file " + filepath + ":");
 		for (List<BigDecimal> thisRow : data)	
