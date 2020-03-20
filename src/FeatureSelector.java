@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -10,7 +11,7 @@ public class FeatureSelector {
 		BACKWARD_ELIMINATION
 	}
 	
-	private static Scanner sc = null;
+	private static Scanner cin = null;
 	
 	private static SearchAlg promptAlgorithm() {
 		
@@ -22,13 +23,13 @@ public class FeatureSelector {
 		validChoices.add(1);
 		validChoices.add(2);
 		
-		int choice = sc.nextInt();
+		int choice = cin.nextInt();
 		while (!validChoices.contains(choice)) {
 			
 			System.out.println("Invalid choice " + Integer.toString(choice) + ".");
 			System.out.println("Enter a choice from this selection: " + validChoices);
 			
-			choice = sc.nextInt();
+			choice = cin.nextInt();
 		}
 		
 		switch (choice) {
@@ -41,7 +42,7 @@ public class FeatureSelector {
 		}
 	}
 	
-	private static File chooseFile() {
+	private static Scanner chooseFile() {
 		
 		System.out.println("Type in the name of the file to test,");
 		System.out.println("or enter a number to use a built-in data set:");
@@ -55,42 +56,58 @@ public class FeatureSelector {
 			validOptions.add(i);
 		
 		// If a number for a default fileset was given
-		if (sc.hasNextInt()) {
+		if (cin.hasNextInt()) {
 			
-			Integer input_int = sc.nextInt();
+			Integer input_int = cin.nextInt();
 			
 			while (!validOptions.contains(input_int)) {
 				
 				System.out.println("Invalid number " + input_int + " detected. Try again.");
-				input_int = sc.nextInt();
+				input_int = cin.nextInt();
 			}
 			
-			switch(input_int) {
-			
-			case 1:
-				return new File("sample_data/cs_170_small80.txt");
-			case 2:
-				return new File("sample_data/cs_170_large80.txt");
-			case 3:
-				return new File("sample_data/cs_170_small25.txt");
-			case 4:
-				return new File("sample_data/cs_170_large25.txt");
+			try {
+				switch(input_int) {
+				
+				case 1:
+					return new Scanner(new File("sample_data/cs_170_small80.txt"));
+				case 2:
+					return new Scanner(new File("sample_data/cs_170_large80.txt"));
+				case 3:
+					return new Scanner(new File("sample_data/cs_170_small25.txt"));
+				case 4:
+					return new Scanner(new File("sample_data/cs_170_large25.txt"));
+				}
+			} catch ( FileNotFoundException e ) {
+				
+				System.err.println("File not found. Verify sample_data/ exists and is populated.");
+				e.printStackTrace();
 			}
 		}
 		
 		// If a custom filepath was given
-		return new File(sc.next());
+		String custom_filepath = cin.next();
+		try {
+			return new Scanner(new File(custom_filepath));
+		} catch (FileNotFoundException e) {
+			System.out.println("File " + custom_filepath + " not found.");
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static void run() {
 		
-		sc = new Scanner(System.in);
+		cin = new Scanner(System.in);
 		
 		System.out.println("Welcome to Ryan Villena's Feature Selection Algorithm.");
-		File inputFile = chooseFile();
+		Scanner file_sc = chooseFile();
 		SearchAlg alg = promptAlgorithm();
+		
+		
 
-		sc.close();
+		cin.close();
+		file_sc.close();
 	}
 	
 }
