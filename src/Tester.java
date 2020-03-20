@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -9,6 +10,22 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Tester {
+	
+	private static void testSetEquality() {
+		
+		Set<Integer> setA = new HashSet<Integer>();
+		Set<Integer> setB = new HashSet<Integer>();
+		
+		for (int i = 0; i < 10; i++)
+			setA.add(i);
+		
+		for (int i = 9; i >= 0; i--)
+			setB.add(i);
+		
+		System.out.println("setA: " + setA);
+		System.out.println("setB: " + setB);
+		System.out.println("setA equals setB? " + setA.equals(setB));
+	}
 	
 	private static void testNormalizeLists() {
 		
@@ -110,6 +127,8 @@ public class Tester {
 		
 //		testNormalize();
 		
-		testNormalizeLists();
+//		testNormalizeLists();
+		
+		testSetEquality();
 	}
 }
