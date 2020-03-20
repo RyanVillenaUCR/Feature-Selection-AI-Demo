@@ -11,10 +11,26 @@ import java.util.Set;
 
 public class Tester {
 	
+	private static void testForwardSelection() {
+		
+		String filepath = "sample_data/cs_170_small80.txt";
+		Scanner sc;
+		try {
+			sc = new Scanner(new File(filepath));
+		} catch (FileNotFoundException e) {
+			System.out.println("Filepath " + filepath + " does not exist.");
+			return;
+		}
+		
+		List<List<BigDecimal>> data = DataGetter.parseDataList(sc);
+		
+		FeatureSelector.runForwardSelection(data);
+	}
+	
 	private static void testNodeEvaluate() {
 		
-//		String filepath = "sample_data/cs_170_small80.txt";
-		String filepath = "sample_data/cs_170_large80.txt";
+		String filepath = "sample_data/cs_170_small80.txt";
+//		String filepath = "sample_data/cs_170_large80.txt";
 		Scanner sc;
 		try {
 			sc = new Scanner(new File(filepath));
@@ -29,12 +45,12 @@ public class Tester {
 		// Select features here
 //		for (int i = 1; i <= 10; i++)
 //			selectedFeatures.add(i);
-//		selectedFeatures.add(5);
+		selectedFeatures.add(5);
 //		selectedFeatures.add(7);
-//		selectedFeatures.add(3);
-		selectedFeatures.add(27);
-		selectedFeatures.add(15);
-		selectedFeatures.add(1);
+		selectedFeatures.add(3);
+//		selectedFeatures.add(27);
+//		selectedFeatures.add(15);
+//		selectedFeatures.add(1);
 		
 		Node n = new Node(selectedFeatures, data);
 		System.out.println("Node with features " + selectedFeatures);
@@ -161,6 +177,8 @@ public class Tester {
 		
 //		testSetEquality();
 		
-		testNodeEvaluate();
+//		testNodeEvaluate();
+		
+		testForwardSelection();
 	}
 }

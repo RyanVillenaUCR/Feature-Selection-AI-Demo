@@ -3,6 +3,8 @@ import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -107,6 +109,51 @@ public class FeatureSelector {
 		}
 	}
 	
+	public static void runForwardSelection(List<List<BigDecimal>> data) {
+		
+		Node root = new Node(new HashSet<Integer>(), data);
+		Queue<Node> bestOfDepth = new PriorityQueue<Node>();
+		bestOfDepth.add(root);
+		
+		int depth = 0;
+		Node bestOfCurrentDepth = root;
+		
+		// Go while depth hasn't yet reached the end
+		while (depth <= DataGetter.getNumberOfFeatures(data)) {
+			
+			Set<Node> litter = bestOfCurrentDepth.generateChildren();
+			assert(litter != null && !litter.isEmpty());
+			
+			Queue<Node> currentGeneration_pq = new PriorityQueue<Node>();
+			currentGeneration_pq.addAll(litter);
+			
+			if (litter.isEmpty()) break;
+			
+			for (Node litter_element : litter)
+				System.out.println(litter_element.generateStatus());
+			
+			bestOfCurrentDepth = currentGeneration_pq.peek();			
+			bestOfDepth.add(bestOfCurrentDepth);
+			
+			System.out.println("Feature set " + bestOfCurrentDepth + " was best of this generation,");
+			System.out.println("accuracy was " + bestOfCurrentDepth.evaluate());
+			
+			depth++;
+		}
+		
+		Node goat = bestOfDepth.peek();
+		
+		System.out.println("Finished search!");
+		System.out.println("The best feature subset is " + goat + ",");
+		System.out.println("with an accuracy of " + goat.evaluate().toString());
+	}
+	
+	private static void runBackwardElimination(List<List<BigDecimal>> data) {
+		
+		// @TODO
+		runForwardSelection(data);
+	}
+	
 	public static void run() {
 		
 		cin = new Scanner(System.in);
@@ -129,7 +176,19 @@ public class FeatureSelector {
 		
 		
 		
-		// Feature selection goes here
+		// Run an algorithm based on client input
+		switch (alg) {
+		
+		case FORWARD_SELECTION:
+			runForwardSelection(data);
+			break;
+		case BACKWARD_ELIMINATION:
+			runBackwardElimination(data);
+			break;
+		default:
+			runForwardSelection(data);
+			break;
+		}
 	}
 	
 }

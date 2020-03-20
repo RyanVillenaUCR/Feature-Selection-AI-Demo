@@ -1,6 +1,7 @@
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -109,5 +110,48 @@ public class Util {
 		
 		final int PRECISION = 7;
 		return dist.sqrt(new MathContext(PRECISION, RoundingMode.HALF_UP));
+	}
+
+	public static Entry<Integer, Integer> getMode(List<List<BigDecimal>> data) {
+		
+		// Maps a class name to its frequency
+		Map<Integer, Integer> frequencies = new HashMap<Integer, Integer>();
+		
+		// First, populate map of frequencies
+		for (List<BigDecimal> thisInstance : data) {
+			
+			Integer className = thisInstance.get(0).intValue();
+			
+			if (!frequencies.containsKey(className)) {
+				
+				frequencies.put(className, 1);
+			}
+			
+			else {
+				
+				frequencies.put(className, frequencies.get(className) + 1);
+//				System.out.println("Just put { " + className + ", " + (frequencies.get(className) + 1) + " }");
+			}
+		}
+		
+		Entry<Integer, Integer> mostFrequentEntry = null;
+		Integer mode = 0;
+		
+		// Then, select the largest frequency and return that class
+		for (Entry<Integer, Integer> thisEntry : frequencies.entrySet()) {
+			
+			if (mostFrequentEntry == null)
+				mostFrequentEntry = thisEntry;	// just initialize to be safe
+			
+			// Save if this is the most frequent entry
+			if (thisEntry.getValue() > mode) {
+				
+				mostFrequentEntry = thisEntry;
+				mode = thisEntry.getValue();
+			}
+		}
+		
+		assert(mode == mostFrequentEntry.getValue());
+		return mostFrequentEntry;
 	}
 }
