@@ -1,4 +1,6 @@
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -38,7 +40,7 @@ public class Node {
 			
 			// If we've found a new closest node, keep track of it
 			if (thisDistance.compareTo(lowestDist) < 0
-					&& !instance.equals(dataInstance)) {
+					&& !instance.equals(dataInstance)) {	// Don't compare to yourself! That's cheating
 				
 				lowestDist = thisDistance;
 				bestInstance = dataInstance;
@@ -46,6 +48,23 @@ public class Node {
 		}
 		
 		return bestInstance.get(0).intValue();
+	}
+	
+	public BigDecimal evaluate() {
+		
+		BigDecimal correctGuesses = BigDecimal.ZERO;
+		BigDecimal totalGuesses   = new BigDecimal(data.size());
+		
+		for (int i = 0; i < data.size(); i++) {
+			
+			Integer correctClass = data.get(i).get(0).intValue();
+			Integer guessedClass = nearestNeighbor(data.get(i));
+			
+			if (correctClass.equals(guessedClass))
+				correctGuesses = correctGuesses.add(BigDecimal.ONE);
+		}
+		
+		return correctGuesses.divide(totalGuesses, new MathContext(7, RoundingMode.HALF_UP));
 	}
 	
 	@Override
