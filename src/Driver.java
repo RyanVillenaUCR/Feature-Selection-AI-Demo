@@ -6,6 +6,8 @@ public class Driver {
 		System.out.println("Hello world!");
 
 		Tester.runTests();
+		
+//		FeatureSelector.run();
 	}
 
 }
