@@ -5,9 +5,9 @@ public class Driver {
 
 		System.out.println("Hello world!");
 
-		Tester.runTests();
+//		Tester.runTests();
 		
-//		FeatureSelector.run();
+		FeatureSelector.run();
 	}
 
 }
