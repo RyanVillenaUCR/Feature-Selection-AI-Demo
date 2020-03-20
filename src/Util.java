@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
@@ -44,5 +45,51 @@ public class Util {
 		}
 		
 		return sb.toString();
+	}
+
+	public static String dataToString(List<List<BigDecimal>> data) {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		for (List<BigDecimal> thisRow : data) {
+			
+			sb.append(thisRow.toString());
+			sb.append('\n');
+		}
+		
+		return sb.toString();
+	}
+	
+	public static BigDecimal getMean(List<BigDecimal> numbers) {
+		
+		BigDecimal mean = BigDecimal.ZERO;
+		
+		for (BigDecimal thisDecimal : numbers)
+			mean = mean.add(thisDecimal);
+		
+		mean = mean.divide(new BigDecimal(numbers.size()), RoundingMode.HALF_UP);
+		
+		return mean;
+	}
+	
+	public static BigDecimal getStdDev(List<BigDecimal> numbers) {
+		
+		final int PRECISION = 7; // As per the input file
+		
+		BigDecimal stdDev = BigDecimal.ZERO;
+		BigDecimal mean = getMean(numbers);
+		
+		for (BigDecimal thisDecimal : numbers) {
+			
+			BigDecimal temp = thisDecimal.subtract(mean);
+			temp = temp.pow(2);
+			
+			stdDev = stdDev.add(temp);
+		}
+		
+		stdDev = stdDev.divide(new BigDecimal(numbers.size()), RoundingMode.HALF_UP);
+		stdDev = stdDev.sqrt(new MathContext(PRECISION, RoundingMode.HALF_UP));
+		
+		return stdDev;
 	}
 }
