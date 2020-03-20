@@ -122,12 +122,11 @@ public class FeatureSelector {
 		while (depth <= DataGetter.getNumberOfFeatures(data)) {
 			
 			Set<Node> litter = bestOfCurrentDepth.generateChildren();
-			assert(litter != null && !litter.isEmpty());
+			if (litter == null || litter.isEmpty()) break;
+//			assert(litter != null && !litter.isEmpty());
 			
 			Queue<Node> currentGeneration_pq = new PriorityQueue<Node>();
 			currentGeneration_pq.addAll(litter);
-			
-			if (litter.isEmpty()) break;
 			
 			for (Node litter_element : litter)
 				System.out.println(litter_element.generateStatus());
