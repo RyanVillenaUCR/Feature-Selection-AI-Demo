@@ -1,0 +1,101 @@
+Hello world!
+Welcome to Ryan Villena's Feature Selection Algorithm.
+Type in the name of the file to test,
+or enter a number to use a built-in data set:
+1: Small dataset (all students)
+2: Large dataset (all students)
+3: Small dataset (Ryan only)
+4: Large dataset (Ryan only)
+Type the number of the algorithm you want to run:
+1: Forward Selection
+2: Backward Elimination
+Fetching data... done!
+The dataset has 10 features,
+with 100 instances.
+Please wait while I normalize the data... Done!
+
+
+Using feature [1], accuracy is 0.57
+Using feature [2], accuracy is 0.54
+Using feature [3], accuracy is 0.68
+Using feature [4], accuracy is 0.65
+Using feature [5], accuracy is 0.75
+Using feature [6], accuracy is 0.61
+Using feature [7], accuracy is 0.62
+Using feature [8], accuracy is 0.61
+Using feature [9], accuracy is 0.66
+Feature set [5] was best of this generation,
+accuracy was 0.75
+
+
+Using features [1, 5], accuracy is 0.76
+Using features [2, 5], accuracy is 0.8
+Using features [3, 5], accuracy is 0.92
+Using features [4, 5], accuracy is 0.75
+Using features [5, 6], accuracy is 0.79
+Using features [5, 7], accuracy is 0.8
+Using features [5, 8], accuracy is 0.77
+Using features [5, 9], accuracy is 0.73
+Feature set [3, 5] was best of this generation,
+accuracy was 0.92
+
+
+Using features [3, 5, 8], accuracy is 0.79
+Using features [3, 5, 9], accuracy is 0.82
+Using features [1, 3, 5], accuracy is 0.84
+Using features [2, 3, 5], accuracy is 0.79
+Using features [3, 4, 5], accuracy is 0.84
+Using features [3, 5, 6], accuracy is 0.82
+Using features [3, 5, 7], accuracy is 0.89
+Feature set [3, 5, 7] was best of this generation,
+accuracy was 0.89
+
+
+Using features [1, 3, 5, 7], accuracy is 0.88
+Using features [2, 3, 5, 7], accuracy is 0.81
+Using features [3, 4, 5, 7], accuracy is 0.78
+Using features [3, 5, 6, 7], accuracy is 0.88
+Using features [3, 5, 7, 8], accuracy is 0.8
+Using features [3, 5, 7, 9], accuracy is 0.82
+Feature set [1, 3, 5, 7] was best of this generation,
+accuracy was 0.88
+
+
+Using features [1, 2, 3, 5, 7], accuracy is 0.79
+Using features [1, 3, 4, 5, 7], accuracy is 0.77
+Using features [1, 3, 5, 6, 7], accuracy is 0.86
+Using features [1, 3, 5, 7, 8], accuracy is 0.75
+Using features [1, 3, 5, 7, 9], accuracy is 0.76
+Feature set [1, 3, 5, 6, 7] was best of this generation,
+accuracy was 0.86
+
+
+Using features [1, 2, 3, 5, 6, 7], accuracy is 0.76
+Using features [1, 3, 4, 5, 6, 7], accuracy is 0.74
+Using features [1, 3, 5, 6, 7, 8], accuracy is 0.78
+Using features [1, 3, 5, 6, 7, 9], accuracy is 0.72
+Feature set [1, 3, 5, 6, 7, 8] was best of this generation,
+accuracy was 0.78
+
+
+Using features [1, 2, 3, 5, 6, 7, 8], accuracy is 0.68
+Using features [1, 3, 4, 5, 6, 7, 8], accuracy is 0.68
+Using features [1, 3, 5, 6, 7, 8, 9], accuracy is 0.73
+Feature set [1, 3, 5, 6, 7, 8, 9] was best of this generation,
+accuracy was 0.73
+
+
+Using features [1, 2, 3, 5, 6, 7, 8, 9], accuracy is 0.71
+Using features [1, 3, 4, 5, 6, 7, 8, 9], accuracy is 0.64
+Feature set [1, 2, 3, 5, 6, 7, 8, 9] was best of this generation,
+accuracy was 0.71
+
+
+Using features [1, 2, 3, 4, 5, 6, 7, 8, 9], accuracy is 0.7
+Feature set [1, 2, 3, 4, 5, 6, 7, 8, 9] was best of this generation,
+accuracy was 0.7
+
+
+Finished search!
+The best feature subset is [3, 5],
+with an accuracy of 0.92
